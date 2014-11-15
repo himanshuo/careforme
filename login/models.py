@@ -1,6 +1,6 @@
 from django.db import models
 
-
+"""
 class User(models.Model):
     name = models.CharField(max_length=100)
     fb_id = models.CharField(max_length=100)
@@ -10,13 +10,13 @@ class User(models.Model):
 
 
 class Compliments(models.Model):
-    compliment = models.Textfield()
+    compliment = models.TextField()
     for_user_id = models.ForeignKey(User)    #Foreign Key
     written_by_id = models.ForeignKey(User)  #Foreign Key
     def __str__(self):
         return self.compliment
 
-
+"""
 
 
 

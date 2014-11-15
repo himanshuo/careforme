@@ -1,22 +1,28 @@
 from django.db import models
 
-"""
+
+
+
 class User(models.Model):
     name = models.CharField(max_length=100)
     fb_id = models.CharField(max_length=100)
+
     def __str__(self):
         return self.name+":"+self.fb_id
 
 
 
-class Compliments(models.Model):
-    compliment = models.TextField()
-    for_user_id = models.ForeignKey(User)    #Foreign Key
-    written_by_id = models.ForeignKey(User)  #Foreign Key
-    def __str__(self):
-        return self.compliment
 
-"""
+class Compliment(models.Model):
+    compliment = models.TextField()
+    compliment_by = models.ForeignKey(User, null=True, related_name='compliment_by')
+    compliment_for = models.ForeignKey(User, null=True, related_name='compliment_for')
+    def __str__(self):
+        return self.compliment+":for "+self.compliment_for+" by "+self.compliment_by
+
+
+
+
 
 
 

@@ -34,4 +34,16 @@ def home(request):
     if request.method == "GET":
         template = loader.get_template('login/index.html') #creates a template object from the html file
         context = RequestContext(request, {})
+
+
+
+
         return HttpResponse(template.render(context)) #return the http response that includes the html page
+
+
+def compliment(request):
+    template = loader.get_template('login/compliment.html') #creates a template object from the html file
+    context = RequestContext(request, {
+        'name':"himanshu"
+    })
+    return HttpResponse(template.render(context)) #return the http response that includes the html page

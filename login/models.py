@@ -18,10 +18,6 @@ class Compliments(models.Model):
 
 """
 
-
-
-
-
 #a = User()
 
 

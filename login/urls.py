@@ -10,5 +10,6 @@ urlpatterns = patterns('',
 
 
     url(r'^$','login.views.home', name='home' ),
+    url(r'^test','login.views.test', name='test' ),
 
 )

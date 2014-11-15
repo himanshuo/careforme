@@ -4,11 +4,11 @@ from django.http import HttpResponse
 from django.template import RequestContext, loader
 from django.http import HttpResponseRedirect
 
-#invoked when the url pattern is "/"
+# invoked when the url pattern is "/"
 def home(request):
     #the post request occurs when the form is filled and submitted
 
-    if request.method == 'POST': #redirect to "/bulletin" for post request
+    if request.method == 'POST':  #redirect to "/bulletin" for post request
 
         #request.POST <---list
         """
@@ -32,6 +32,12 @@ def home(request):
         """
     #the get request occurs when the page is loaded
     if request.method == "GET":
-        template = loader.get_template('login/index.html') #creates a template object from the html file
+        template = loader.get_template('login/index.html')  #creates a template object from the html file
         context = RequestContext(request, {})
-        return HttpResponse(template.render(context)) #return the http response that includes the html page
+        return HttpResponse(template.render(context))  #return the http response that includes the html page
+
+
+def test(request):
+    template = loader.get_template('login/testtemplate.html')  #creates a template object from the html file
+    context = RequestContext(request, {})
+    return HttpResponse(template.render(context))  #return the http response that includes the html page

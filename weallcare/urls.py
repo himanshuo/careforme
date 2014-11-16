@@ -12,4 +12,6 @@ urlpatterns = patterns('',
     url(r'^$','login.views.home', name='home' ),
     url(r'^facebook_login$','login.views.facebook_login', name='facebook_login' ),
     url(r'^member$','login.views.member', name='member'),
+    url(r'^save_compliment$','login.views.save_compliment', name='save_compliment'),
+
 )

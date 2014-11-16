@@ -81,12 +81,28 @@ def facebook_login(request):
 
 
             except ObjectDoesNotExist:
-                 #create user
+                #create user
                 User(name=user_data['name'], fb_id=user_data['id'], fb_token=str(token)).save()
 
-                #get friends of user
-                friends = get_friends_for_user(token)
-                print friends
+            #get friends of user
+            friends = get_friends_for_user(token)
+            friends = friends['data']
+            for k in friends:
+                try:
+                    User.objects.get(fb_id=k['id'])
+                except ObjectDoesNotExist:
+                    User(name=k['name'], fb_id=k['id']).save()
+
+                try:
+                    Friend.objects.get(fb_id=user_data['id'], friend_fb_id = k['id'])
+                except ObjectDoesNotExist:
+                    Friend(fb_id=user_data['id'], friend_fb_id = k['id']).save()
+
+
+
+
+
+
 
             request.session['user_id'] = user_data['id']
             return HttpResponseRedirect(member_page)
@@ -140,11 +156,15 @@ def get_friends_for_user(token):
 
 def member(request):
     template = loader.get_template('login/member.html') #creates a template object from the html file
-    print "member called!!!!!!!"
+    print request.session['user_id']
     compliments = Compliment.objects.filter(compliment_for=request.session['user_id'])
     friends = get_friends_for_internal_user(request.session['user_id'])
 
 
+    for k in compliments:
+        print k.compliment
+        print k.compliment_by
+        print k.compliment_for
 
     context = RequestContext(request, {
         'name':"himanshu",
@@ -156,9 +176,27 @@ def member(request):
 
 def get_friends_for_internal_user(user_id):
     records = Friend.objects.filter(fb_id=user_id)
+    print records
     friends_of = {}
-    for i in records:
-        friend_record = User.objects.get(i.friend_fb_id)
+    for friendship in records:
+        print friendship.friend_fb_id
+        print friendship.fb_id
+        try:
+            friend_record = User.objects.get(fb_id=str(friendship.friend_fb_id))
+            print "success sucka"
+        except:
+            print friendship.friend_fb_id
+            print User.objects.filter(fb_id=str(friendship.friend_fb_id))
+            #print friend_record
+            #friend_record = friend_record[0]
         friends_of[friend_record.fb_id] = friend_record.name
 
     return friends_of
+
+
+def save_compliment(request):
+    try:
+        Compliment(compliment=request.POST['compliment'],compliment_by=request.session['user_id'], compliment_for=request.POST['compliment_for'] ).save()
+        return HttpResponseRedirect(member_page)
+    except:
+        print "duddeeeeeee, it didnt work"

@@ -80,15 +80,16 @@
     <p class="row top-buffer"></p>
     <p class="row top-buffer"></p>
     <p class="row top-buffer"></p>
-    <form role="form" >
+    <form role="form" method="POST" action="/save_compliment">{%  csrf_token %}
         <h2 class="text-center row top-buffer">Write a Compliment for a Friend :)</h2>
         <div class="form-group">
             <label for="choose_a_friend">Choose A Friend to Compliment</label>
-            <select class="form-control">
+            <select name="compliment_for" class="form-control">
 
 
                 {% for id,name in friends.iteritems  %}
-                <option>{{ name }}</option>
+
+                <option value={{ id }}>{{ name }}</option>
                 {% endfor %}
 
 
@@ -99,8 +100,8 @@
 
 
         <div class="form-group">
-            <label for="exampleInputFile">Why is my friend so awesome? :)</label>
-            <textarea class="form-control" rows="3"></textarea>
+            <label for="compliment_text">Why is my friend so awesome? :)</label>
+            <textarea name="compliment" class="form-control" rows="3"></textarea>
         </div>
 
 

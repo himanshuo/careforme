@@ -52,6 +52,7 @@ def home(request):
 ##########################   login start  ####################################
 
 def facebook_login(request):
+
     if not (has_code(request) or has_token(request)):
         #get the code!
         state_url_fragment = "&state={}".format("a") #not safe, fix this!
@@ -62,9 +63,10 @@ def facebook_login(request):
 
 
         r = requests.get(facebook_token_url_base+code_url_fragment)
-
+        print "after getting access token"
         token = urlparse.parse_qs(r.text)['access_token']
         token = token[0]
+
         if not is_valid(token):
 
             return HttpResponseRedirect(home_page)
@@ -105,6 +107,7 @@ def has_token(request):
 
 
 def is_valid(token):
+    print "is valid is the problem..."
     data = get_validation_data(token).json()
     data = data['data']
     return data['is_valid'] is True and str(data['app_id']) == str(app_id)
@@ -137,26 +140,25 @@ def get_friends_for_user(token):
 
 def member(request):
     template = loader.get_template('login/member.html') #creates a template object from the html file
-
+    print "member called!!!!!!!"
     compliments = Compliment.objects.filter(compliment_for=request.session['user_id'])
     friends = get_friends_for_internal_user(request.session['user_id'])
-    friends_names = []
-    for i in friends:
-        friends_names.append(i[0])
-        friends_
+
+
+
     context = RequestContext(request, {
         'name':"himanshu",
         'compliments':compliments,
         'num_compliments':len(compliments),
-        'friends_names':friends
+        'friends':friends
     })
     return HttpResponse(template.render(context)) #return the http response that includes the html page
 
 def get_friends_for_internal_user(user_id):
     records = Friend.objects.filter(fb_id=user_id)
-    friends_of = []
+    friends_of = {}
     for i in records:
-        f = User.objects.get(i.friend_fb_id)
-        friends_of.append(f.name, f.fb_id)
+        friend_record = User.objects.get(i.friend_fb_id)
+        friends_of[friend_record.fb_id] = friend_record.name
 
     return friends_of

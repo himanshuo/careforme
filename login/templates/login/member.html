@@ -24,7 +24,7 @@
 
 
 
-    <script src="{% static "login/bloodhound.min.js" %}"></script>
+
     <script src="{% static "login/member.js" %}"></script>
     <!-- Custom styles for this template -->
     <link href="{% static "login/jumbotron-narrow.css" %}" rel="stylesheet">
@@ -85,11 +85,14 @@
         <div class="form-group">
             <label for="choose_a_friend">Choose A Friend to Compliment</label>
             <select class="form-control">
-                {% for friend in friends %}
 
-                <option>{{ friend[0] }}</option>
 
-               {% endfor %}
+                {% for id,name in friends.iteritems  %}
+                <option>{{ name }}</option>
+                {% endfor %}
+
+
+
             </select>
         </div>
 

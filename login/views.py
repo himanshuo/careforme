@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect
 import requests
 import urlparse
 from settings import *
+import copy
 
 from django.core.exceptions import ObjectDoesNotExist
 from models import *
@@ -159,7 +160,8 @@ def member(request):
     print request.session['user_id']
     compliments = Compliment.objects.filter(compliment_for=request.session['user_id'])
     friends = get_friends_for_internal_user(request.session['user_id'])
-
+    for compliment in compliments:
+        compliment.compliment_by = str(User.objects.get(fb_id = compliment.compliment_by)).split(':')[0]
 
     for k in compliments:
         print k.compliment

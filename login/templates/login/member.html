@@ -42,7 +42,7 @@
     <div class="header">
         <nav>
             <ul class="nav nav-pills pull-right">
-                <li role="presentation" class="active"><a href="#">Compliments<span class="badge">{{ num_compliments }}</span></a></li>
+                <li role="presentation" class="active"><a href="#">Messages<span class="badge">{{ num_compliments }}</span></a></li>
             </ul>
         </nav>
         <h3 class="text-muted">Care For Me</h3>
@@ -50,7 +50,7 @@
 
     <table class="table table-hover table-striped">
         <tr class="info">
-            <th>Compliment</th>
+            <th>Message</th>
             <th>Friend</th>
         </tr>
 
@@ -67,7 +67,8 @@
     <form role="form">
         <div class="form-group">
             <p class="row">
-                <button type="button" class="btn btn-primary pull-right">Unlock More Compliments!</button>
+                <button type="button" class="btn btn-primary pull-right">Unlock More Messages!</button>
+                <button type="button" class="btn btn-primary pull-right">Having a Bad Day?</button>
             </p>
 
         </div>
@@ -81,9 +82,9 @@
     <p class="row top-buffer"></p>
     <p class="row top-buffer"></p>
     <form role="form" method="POST" action="/save_compliment">{%  csrf_token %}
-        <h2 class="text-center row top-buffer">Write a Compliment for a Friend :)</h2>
+        <h2 class="text-center row top-buffer">Write a caring message for a friend :)</h2>
         <div class="form-group">
-            <label for="choose_a_friend">Choose A Friend to Compliment</label>
+            <label for="choose_a_friend">Which friend is this message for?</label>
             <select name="compliment_for" class="form-control">
 
 
